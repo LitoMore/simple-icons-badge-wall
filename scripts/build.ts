@@ -8,12 +8,17 @@ const icons = Object.values(si);
 const projectRoot = path.join(import.meta.dirname, "..");
 const readmeFile = path.join(projectRoot, "README.md");
 
+const encodeBadgeContentParameters = (params: string[]) =>
+  params.map((p) =>
+    encodeURIComponent(p.replace(/-/g, "--").replace(/_/g, "__"))
+  );
+
 const iconLines: string[] = [];
 for (const icon of icons) {
   const { title, hex } = icon;
   const slug = icon.slug ?? titleToSlug(title);
   const logoColor = colorsForBackground("#" + hex);
-  const uri = "/" + [title, hex].join("-");
+  const uri = "/" + encodeBadgeContentParameters([title, hex]).join("-");
   const url = new URL(baseUrl + uri);
   const query = new URLSearchParams({
     logo: slug,
@@ -28,6 +33,6 @@ const readme = await Bun.file(readmeFile).text();
 await Bun.write(
   readmeFile,
   readme
-    .replaceAll(/!\[\]\(.+\)\n/g, "")
+    .replaceAll(/!\[.+\]\(.+\)\n/g, "")
     .replace("\n".repeat(3), "\n\n" + iconLines.join("\n") + "\n\n")
 );
