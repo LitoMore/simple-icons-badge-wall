@@ -1,0 +1,16 @@
+{
+  "name": "simple-icons-badge-wall",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "css-color-converter": "^2.0.0",
+    "remove": "^0.1.5",
+    "simple-icons": "^13.7.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "bun scripts/build.ts"
+  }
+}
